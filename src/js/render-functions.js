@@ -1,20 +1,19 @@
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 
-export function clearGallery(container) {
-  container.innerHTML = '';
-}
-
-const galleryContainer = document.querySelector('.gallery');
-
-// Створюємо екземпляр плагіна ОДИН раз поза функцією
+// Ініціалізуємо один екземпляр лайтбоксу для всього модуля
 const lightbox = new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
   captionDelay: 250,
 });
 
-export function createGallery(images) {
-  // Створюємо розмітку, деструктуризуючи потрібні 7 властивостей з кожного об'єкта
+// 1. Очищає вказаний контейнер
+export function clearGallery(container) {
+  container.innerHTML = '';
+}
+
+// 2. Рендерить розмітку у вказаний контейнер
+export function createGallery(images, container) {
   const markup = images
     .map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => {
       return `
@@ -33,9 +32,22 @@ export function createGallery(images) {
     })
     .join('');
 
-  // Додаємо розмітку в контейнер
-  galleryContainer.innerHTML = markup;
-  
-  // 2. Обов'язково викликаємо refresh() після оновлення DOM
+  container.innerHTML = markup;
   lightbox.refresh();
+}
+
+// 3. Оновлює вміст: спочатку чистить, потім рендерить нові дані
+export function updateGallery(images, container) {
+  clearGallery(container);
+  createGallery(images, container);
+}
+
+// 4. Показує вказаний елемент лоадера
+export function showLoader(loaderElement) {
+  loaderElement.classList.remove('is-hidden');
+}
+
+// 5. Ховає вказаний елемент лоадера
+export function hideLoader(loaderElement) {
+  loaderElement.classList.add('is-hidden');
 }

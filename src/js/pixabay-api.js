@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_KEY = 'YOUR_PIXABAY_API_KEY'; // Заміни на свій реальний ключ Pixabay
+// Замість плейсхолдера вставляємо реальний рядок-ключ
+const API_KEY = '45321984-abcdef1234567890987654321'; // Це приклад, сюди встав свій ключ
 const BASE_URL = 'https://pixabay.com/api/';
 
 export function getImagesByQuery(query) {
@@ -13,6 +14,5 @@ export function getImagesByQuery(query) {
   });
 
   return axios.get(`${BASE_URL}?${searchParams}`)
-    .then(response => response.data); 
-    // Повертаємо саме властивість data з отриманої відповіді
+    .then(response => response.data);
 }

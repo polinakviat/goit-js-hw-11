@@ -1,10 +1,18 @@
 import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
 
-import { getImagesByQuery } from './js/pixabay-api.js';
-import { createGallery, clearGallery } from './js/render-functions.js';
+import { getImagesByQuery } from './pixabay-api.js';
+// Імпортуємо абсолютно всі створені функції
+import { 
+  clearGallery, 
+  updateGallery, 
+  showLoader, 
+  hideLoader 
+} from './render-functions.js';
 
 const searchForm = document.querySelector('.search-form');
+const galleryContainer = document.querySelector('.gallery');
+const loader = document.querySelector('.loader');
 
 searchForm.addEventListener('submit', handleSearch);
 
@@ -16,14 +24,16 @@ function handleSearch(event) {
   if (searchQuery === '') {
     iziToast.warning({
       title: 'Warning',
-      message: 'Search field cannot be empty. Please enter a keyword!',
+      message: 'Search field cannot be empty!',
       position: 'topRight',
     });
     return;
   }
 
-    clearGallery();
-    
+  // Очищаємо галерею та вмикаємо лоадер, передаючи елементи як аргументи
+  clearGallery(galleryContainer);
+  showLoader(loader);
+
   getImagesByQuery(searchQuery)
     .then(data => {
       if (data.hits.length === 0) {
@@ -35,7 +45,8 @@ function handleSearch(event) {
         return;
       }
 
-      createGallery(data.hits);
+      // Використовуємо комплексну функцію оновлення вмісту
+      updateGallery(data.hits, galleryContainer);
     })
     .catch(error => {
       iziToast.error({
@@ -44,6 +55,10 @@ function handleSearch(event) {
         position: 'topRight',
       });
       console.error(error);
+    })
+    .finally(() => {
+      // Ховаємо лоадер, передаючи посилання на нього
+      hideLoader(loader);
     });
 
   event.currentTarget.reset();
