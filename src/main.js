@@ -1,18 +1,18 @@
 import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
 
-import { getImagesByQuery } from './js/pixabay-api.js';
-// Імпортуємо абсолютно всі створені функції
+import { getImagesByQuery } from './pixabay-api.js';
+// Імпортуємо всі потрібні функції для роботи з інтерфейсом
 import { 
   clearGallery, 
   updateGallery, 
   showLoader, 
   hideLoader 
-} from './js/render-functions.js';
+} from './render-functions.js';
 
+// ТУТ МАЄ БУТИ ТІЛЬКИ ФОРМА! 
+// Видали звідси рядки з .gallery та .loader
 const searchForm = document.querySelector('.search-form');
-const galleryContainer = document.querySelector('.gallery');
-const loader = document.querySelector('.loader');
 
 searchForm.addEventListener('submit', handleSearch);
 
@@ -30,9 +30,9 @@ function handleSearch(event) {
     return;
   }
 
-  // Очищаємо галерею та вмикаємо лоадер, передаючи елементи як аргументи
-  clearGallery(galleryContainer);
-  showLoader(loader);
+  // Викликаємо функції БЕЗ передачі будь-яких DOM-елементів з цього файлу
+  clearGallery(); 
+  showLoader();
 
   getImagesByQuery(searchQuery)
     .then(data => {
@@ -45,8 +45,8 @@ function handleSearch(event) {
         return;
       }
 
-      // Використовуємо комплексну функцію оновлення вмісту
-      updateGallery(data.hits, galleryContainer);
+      // Передаємо ТІЛЬКИ чистий масив даних з бекенду (data.hits)
+      updateGallery(data.hits);
     })
     .catch(error => {
       iziToast.error({
@@ -57,8 +57,8 @@ function handleSearch(event) {
       console.error(error);
     })
     .finally(() => {
-      // Ховаємо лоадер, передаючи посилання на нього
-      hideLoader(loader);
+      // Функція сама знає, який лоадер їй потрібно сховати
+      hideLoader();
     });
 
   event.currentTarget.reset();
