@@ -1,6 +1,10 @@
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 
+export function clearGallery(container) {
+  container.innerHTML = '';
+}
+
 const galleryContainer = document.querySelector('.gallery');
 
 // Створюємо екземпляр плагіна ОДИН раз поза функцією
