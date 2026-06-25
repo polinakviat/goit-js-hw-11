@@ -14,16 +14,19 @@ const lightbox = new SimpleLightbox('.gallery a', {
 });
 
 export function createGallery(images) {
+  // Створюємо розмітку, деструктуризуючи потрібні 7 властивостей з кожного об'єкта
   const markup = images
-    .map(image => {
+    .map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => {
       return `
         <li class="gallery-item">
-          <a class="gallery-link" href="${image.largeImageURL}">
-            <img class="gallery-image" src="${image.webformatURL}" alt="${image.tags}" />
+          <a class="gallery-link" href="${largeImageURL}">
+            <img class="gallery-image" src="${webformatURL}" alt="${tags}" />
           </a>
           <div class="info-block">
-            <p><b>Likes:</b> ${image.likes}</p>
-            <p><b>Views:</b> ${image.views}</p>
+            <p class="info-item"><b>Likes:</b> ${likes}</p>
+            <p class="info-item"><b>Views:</b> ${views}</p>
+            <p class="info-item"><b>Comments:</b> ${comments}</p>
+            <p class="info-item"><b>Downloads:</b> ${downloads}</p>
           </div>
         </li>
       `;
