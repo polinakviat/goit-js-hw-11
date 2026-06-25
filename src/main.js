@@ -1,14 +1,14 @@
 import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
 
-import { getImagesByQuery } from './pixabay-api.js';
+import { getImagesByQuery } from './js/pixabay-api.js';
 // Імпортуємо абсолютно всі створені функції
 import { 
   clearGallery, 
   updateGallery, 
   showLoader, 
   hideLoader 
-} from './render-functions.js';
+} from './js/render-functions.js';
 
 const searchForm = document.querySelector('.search-form');
 const galleryContainer = document.querySelector('.gallery');
