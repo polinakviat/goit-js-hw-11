@@ -1,14 +1,14 @@
 import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
 
-import { getImagesByQuery } from './pixabay-api.js';
+import { getImagesByQuery } from './js/pixabay-api.js';
 // Імпортуємо всі потрібні функції для роботи з інтерфейсом
 import { 
   clearGallery, 
   updateGallery, 
   showLoader, 
   hideLoader 
-} from './render-functions.js';
+} from './js/render-functions.js';
 
 // ТУТ МАЄ БУТИ ТІЛЬКИ ФОРМА! 
 // Видали звідси рядки з .gallery та .loader
